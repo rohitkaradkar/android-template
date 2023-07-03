@@ -3,27 +3,80 @@ on :
     branches :
       - main
 
-name : Run Checks
+name : Run Checks and Android Tests
 
 concurrency :
   group : ${{ github.head_ref }}
   cancel-in-progress : true
 
 jobs :
+  android-test:
+    runs-on : macos-latest
+    strategy :
+      matrix :
+        api-level : [ 33, 28 ]
+        target : [ google_apis ]
+        arch : [ x86_64 ]
+
+    steps :
+      - name : checkout
+        uses : actions/checkout@v3
+
+      - name : Set up JDK
+        uses : actions/setup-java@v3
+        with :
+          distribution : temurin
+          java-version : 18
+
+      - name : Gradle cache
+        uses : gradle/gradle-build-action@v2
+
+      - name : AVD cache
+        uses : actions/cache@v3
+        id : avd-cache
+        with :
+          path : |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key : avd-${{ matrix.api-level }}-${{ matrix.target }}-${{ matrix.arch }}
+
+      - name : create AVD and generate snapshot for caching
+        if : steps.avd-cache.outputs.cache-hit != 'true'
+        uses : reactivecircus/android-emulator-runner@v2
+        with :
+          api-level : ${{ matrix.api-level }}
+          target : ${{ matrix.target }}
+          arch : ${{ matrix.arch }}
+          force-avd-creation : false
+          emulator-options : -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations : false
+          script : echo "Generated AVD snapshot for caching."
+
+      - name : run tests
+        uses : reactivecircus/android-emulator-runner@v2
+        with :
+          api-level : ${{ matrix.api-level }}
+          target : ${{ matrix.target }}
+          arch : ${{ matrix.arch }}
+          force-avd-creation : false
+          emulator-options : -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations : true
+          script : ./gradlew connectedCheck
+
   check :
     runs-on : ubuntu-latest
     steps :
       - name : Checkout repository
-        uses : actions/checkout@v3.1.0
+        uses : actions/checkout@v3
 
       - name : Set up JDK
-        uses : actions/setup-java@v3.6.0
+        uses : actions/setup-java@v3
         with :
           distribution : temurin
           java-version : 18
 
       - name : Run checks
-        uses : gradle/gradle-build-action@v2.3.3
+        uses : gradle/gradle-build-action@v2
         with :
           arguments : check
           gradle-home-cache-cleanup : true
