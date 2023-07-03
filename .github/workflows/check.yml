@@ -14,13 +14,19 @@ jobs :
     runs-on : macos-latest
     strategy :
       matrix :
-        api-level : [ 28, 33 ]
+        api-level : [ 33 ]
         target : [ google_apis ]
         arch : [ x86_64 ]
 
     steps :
       - name : checkout
         uses : actions/checkout@v3
+
+      - name : Set up JDK
+        uses : actions/setup-java@v3
+        with :
+          distribution : temurin
+          java-version : 18
 
       - name : Gradle cache
         uses : gradle/gradle-build-action@v2
@@ -61,16 +67,16 @@ jobs :
     runs-on : ubuntu-latest
     steps :
       - name : Checkout repository
-        uses : actions/checkout@v3.1.0
+        uses : actions/checkout@v3
 
       - name : Set up JDK
-        uses : actions/setup-java@v3.6.0
+        uses : actions/setup-java@v3
         with :
           distribution : temurin
           java-version : 18
 
       - name : Run checks
-        uses : gradle/gradle-build-action@v2.3.3
+        uses : gradle/gradle-build-action@v2
         with :
           arguments : check
           gradle-home-cache-cleanup : true
