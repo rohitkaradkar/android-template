@@ -4,10 +4,10 @@
     "config:base"
   ],
   "separateMinorPatch" : false,
-  "automergeType" : "pr",
+  "automergeType" : "branch",
   "packageRules" : [
     {
-      "description" : "Merge minor and patch update automatically. Creates PR first",
+      "description" : "Merge minor and patch update automatically (Without PR)",
       "matchUpdateTypes" : [
         "minor",
         "patch"
