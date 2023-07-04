@@ -1,0 +1,18 @@
+{
+  "$schema" : "https://docs.renovatebot.com/renovate-schema.json",
+  "extends" : [
+    "config:base"
+  ],
+  "separateMinorPatch" : false,
+  "automergeType" : "pr",
+  "packageRules" : [
+    {
+      "description" : "Merge minor and patch update automatically. Creates PR first",
+      "matchUpdateTypes" : [
+        "minor",
+        "patch"
+      ],
+      "automerge" : true
+    }
+  ]
+}
