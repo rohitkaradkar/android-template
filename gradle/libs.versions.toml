@@ -52,5 +52,5 @@ android-application = { id = "com.android.application", version.ref = "android" 
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-spotless = "com.diffplug.spotless:6.20.0"
+spotless = "com.diffplug.spotless:6.21.0"
 dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
