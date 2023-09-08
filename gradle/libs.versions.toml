@@ -6,7 +6,7 @@ compose-bom = "2023.06.01"
 compose-compiler = "1.4.6"
 moshi = "1.14.0"
 hilt = "2.47"
-lifecycle = "2.5.1"
+lifecycle = "2.6.2"
 retrofit = "2.9.0"
 coroutines = "1.7.3"
 
