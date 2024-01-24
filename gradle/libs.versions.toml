@@ -32,7 +32,7 @@ kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "
 hilt-agp = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-compilerAnnotation = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
-hilt-navigationCompose = "androidx.hilt:hilt-navigation-compose:1.0.0"
+hilt-navigationCompose = "androidx.hilt:hilt-navigation-compose:1.1.0"
 moshi = { module = "com.squareup.moshi:moshi", version.ref = "moshi" }
 moshi-codegenAnnotation = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshi" }
 coil-compose = "io.coil-kt:coil-compose:2.4.0"
